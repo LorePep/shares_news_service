@@ -1,10 +1,36 @@
+import mock
 import unittest
 
+from bs4 import BeautifulSoup
+
 from scraping import (
+    scrape_interesting_news,
     _get_share_name,
     _get_words_from_text,
     _is_news_interesting,
 )
+
+
+FIXTURE_HTML = """
+<html>
+    <head>
+        <title>Some fixture HTML</title>
+    </head>
+    <body>
+        <table style="width:100%">
+            <tr>
+                <td class="m" colspan="2">A news results</td>
+                <td class="mb" align="right" valign="top">NAME: ksjadlk</td> 
+            </tr>
+        </table>
+    </body>
+</html>
+"""
+
+
+def _return_fixture_scraped(url):
+    return BeautifulSoup(FIXTURE_HTML, "html.parser")
+
 
 class TestScraping(unittest.TestCase):
 
@@ -75,3 +101,11 @@ class TestScraping(unittest.TestCase):
         for tt in test_cases:
             actual = _get_words_from_text(tt["input"])
             self.assertEqual(tt["expected"], actual, msg="failed %s" % tt["name"])
+    
+    @mock.patch('scraping._get_soup_from_url', side_effect=_return_fixture_scraped)
+    def test_scrape_interesting_news(self, mock_get_soup_from_url):
+        actual = scrape_interesting_news("one_url")
+        expected = {
+            "NAME:": "A news results"
+        }
+        self.assertDictEqual(actual, expected)

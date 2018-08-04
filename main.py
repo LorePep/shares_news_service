@@ -1,18 +1,22 @@
 import argparse
 
-from scraping import scrape
+from scraping import scrape_interesting_news
 from telegram import send_message
 
 
 def main(url, chat_id, token):
-    shares_to_news = scrape(url)
+    shares_to_news = scrape_interesting_news(url)
     for share, news in shares_to_news.items():
         msg = _make_message(share, news)
         send_message(msg, chat_id, token)
 
 
 def _make_message(share, news):
-    return "{}: {}\n".format(share, news)
+    """
+    >>> _make_message("oneShare", "This is one news")
+    'oneShare: This is one news'
+    """
+    return "{}: {}".format(share, news)
 
 
 if __name__ == "__main__":
