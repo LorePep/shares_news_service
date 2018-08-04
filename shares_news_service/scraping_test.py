@@ -1,6 +1,6 @@
-import mock
 import unittest
 
+import mock
 from bs4 import BeautifulSoup
 
 from scraping import (
