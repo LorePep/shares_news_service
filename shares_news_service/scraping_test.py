@@ -20,7 +20,7 @@ FIXTURE_HTML = """
         <table style="width:100%">
             <tr>
                 <td class="m" colspan="2">A news results</td>
-                <td class="mb" align="right" valign="top">NAME: ksjadlk</td> 
+                <td class="mb" align="right" valign="top">NAME ksjadlk</td> 
             </tr>
         </table>
     </body>
@@ -106,6 +106,6 @@ class TestScraping(unittest.TestCase):
     def test_scrape_interesting_news(self, mock_get_soup_from_url):
         actual = scrape_interesting_news("one_url")
         expected = {
-            "NAME:": "A news results"
+            "NAME": "A news results"
         }
         self.assertDictEqual(actual, expected)
