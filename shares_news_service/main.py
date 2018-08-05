@@ -15,7 +15,7 @@ def main():
     shares_to_news = scrape_interesting_news(args.url)
     for share, news in shares_to_news.items():
         msg = _make_message(share, news)
-        send_message(msg, args.chat_id, args.token)
+        send_message(msg, args.chat_id, args.telegram_token)
 
 
 def _make_message(share, news):
