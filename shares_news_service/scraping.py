@@ -14,13 +14,12 @@ SHARES_HTML_TAG_ATTR = {"class": "mb", "align": "right", "valign": "top"}
 
 
 # scrape_interesting_news scrapes a site to gather news about potentially useful shares.
-def scrape_interesting_news(url): 
+def scrape_interesting_news(url):
     soup = _get_soup_from_url(url)
     news = soup.findAll("td", attrs=NEWS_HTML_TAG_ATTR)
-    shares_names = soup.findAll("td", attrs=SHARES_HTML_TAG_ATTR)    
-    
-    return _get_interesting_shares_to_news(news, shares_names)
+    shares_names = soup.findAll("td", attrs=SHARES_HTML_TAG_ATTR)
 
+    return _get_interesting_shares_to_news(news, shares_names)
 
 
 def _get_interesting_shares_to_news(news, names):
@@ -36,7 +35,7 @@ def _get_interesting_shares_to_news(news, names):
             continue
         if _is_news_interesting(words):
             interesting_shares_to_news[name] = text
-        
+
     return interesting_shares_to_news
 
 
